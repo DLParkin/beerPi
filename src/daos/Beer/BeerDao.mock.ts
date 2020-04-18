@@ -1,18 +1,18 @@
-import { IUser } from '@entities/User';
+import { IProduct } from '@entities/Beer';
 import { getRandomInt } from '@shared/functions';
-import { MockDaoMock } from '../MockDb/MockDao.mock';
-import { IUserDao } from './UserDao';
+import { IProductDao } from './BeerDao';
+import { BeerDaoMock } from '@daos/BeerDb/MockBeerDb.mock';
 
 
-class UserDao extends MockDaoMock implements IUserDao {
+class UserDao extends BeerDaoMock implements IProductDao {
 
 
-    public async getOne(email: string): Promise<IUser | null> {
+    public async getOne(name: string): Promise<IProduct | null> {
         try {
             const db = await super.openDb();
-            for (const user of db.users) {
-                if (user.email === email) {
-                    return user;
+            for (const beer of db.beers) {
+                if (beer.name === name) {
+                    return beer;
                 }
             }
             return null;
@@ -22,21 +22,21 @@ class UserDao extends MockDaoMock implements IUserDao {
     }
 
 
-    public async getAll(): Promise<IUser[]> {
+    public async getAll(): Promise<IProduct[]> {
         try {
             const db = await super.openDb();
-            return db.users;
+            return db.beers;
         } catch (err) {
             throw err;
         }
     }
 
 
-    public async add(user: IUser): Promise<void> {
+    public async add(beer: IProduct): Promise<void> {
         try {
             const db = await super.openDb();
-            user.id = getRandomInt();
-            db.users.push(user);
+            beer.id = getRandomInt();
+            db.beers.push(beer);
             await super.saveDb(db);
         } catch (err) {
             throw err;
@@ -44,12 +44,12 @@ class UserDao extends MockDaoMock implements IUserDao {
     }
 
 
-    public async update(user: IUser): Promise<void> {
+    public async update(beer: IProduct): Promise<void> {
         try {
             const db = await super.openDb();
-            for (let i = 0; i < db.users.length; i++) {
-                if (db.users[i].id === user.id) {
-                    db.users[i] = user;
+            for (let i = 0; i < db.beers.length; i++) {
+                if (db.beers[i].id === beer.id) {
+                    db.beers[i] = beer;
                     await super.saveDb(db);
                     return;
                 }
@@ -64,9 +64,9 @@ class UserDao extends MockDaoMock implements IUserDao {
     public async delete(id: number): Promise<void> {
         try {
             const db = await super.openDb();
-            for (let i = 0; i < db.users.length; i++) {
-                if (db.users[i].id === id) {
-                    db.users.splice(i, 1);
+            for (let i = 0; i < db.beers.length; i++) {
+                if (db.beers[i].id === id) {
+                    db.beers.splice(i, 1);
                     await super.saveDb(db);
                     return;
                 }

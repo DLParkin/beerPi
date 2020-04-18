@@ -1,6 +1,6 @@
 import jsonfile from 'jsonfile';
 
-export class BeerDbMock {
+export class BeerDaoMock {
 
     private readonly dbFilePath = 'src/daos/BeerDb/BeerDb.json';
 
