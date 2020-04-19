@@ -2,64 +2,64 @@ import { Request, Response, Router } from 'express';
 import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
 import { ParamsDictionary } from 'express-serve-static-core';
 
-import UserDao from '@daos/User/UserDao.mock';
+import BeerDao from '@daos/Beer/BeerDao.mock';
 import { paramMissingError } from '@shared/constants';
 
 // Init shared
 const router = Router();
-const userDao = new UserDao();
+const beerDao = new BeerDao();
 
 
 /******************************************************************************
- *                      Get All Users - "GET /api/users/all"
+ *                      Get All Beers - "GET /api/beers/all"
  ******************************************************************************/
 
 router.get('/all', async (req: Request, res: Response) => {
-    const users = await userDao.getAll();
-    return res.status(OK).json({users});
+    const beers = await beerDao.getAll();
+    return res.status(OK).json({beers});
 });
 
 
 /******************************************************************************
- *                       Add One - "POST /api/users/add"
+ *                       Add One - "POST /api/beers/add"
  ******************************************************************************/
 
 router.post('/add', async (req: Request, res: Response) => {
-    const { user } = req.body;
-    if (!user) {
+    const { beer } = req.body;
+    if (!beer) {
         return res.status(BAD_REQUEST).json({
             error: paramMissingError,
         });
     }
-    await userDao.add(user);
+    await beerDao.add(beer);
     return res.status(CREATED).end();
 });
 
 
 /******************************************************************************
- *                       Update - "PUT /api/users/update"
+ *                       Update - "PUT /api/beers/update"
  ******************************************************************************/
 
 router.put('/update', async (req: Request, res: Response) => {
-    const { user } = req.body;
-    if (!user) {
+    const { beer } = req.body;
+    if (!beer) {
         return res.status(BAD_REQUEST).json({
             error: paramMissingError,
         });
     }
-    user.id = Number(user.id);
-    await userDao.update(user);
+    beer.id = Number(beer.id);
+    await beerDao.update(beer);
     return res.status(OK).end();
 });
 
 
 /******************************************************************************
- *                    Delete - "DELETE /api/users/delete/:id"
+ *                    Delete - "DELETE /api/beers/delete/:id"
  ******************************************************************************/
 
 router.delete('/delete/:id', async (req: Request, res: Response) => {
     const { id } = req.params as ParamsDictionary;
-    await userDao.delete(Number(id));
+    await beerDao.delete(Number(id));
     return res.status(OK).end();
 });
 

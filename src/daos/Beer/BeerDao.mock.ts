@@ -4,7 +4,7 @@ import { IProductDao } from './BeerDao';
 import { BeerDaoMock } from '@daos/BeerDb/MockBeerDb.mock';
 
 
-class UserDao extends BeerDaoMock implements IProductDao {
+class BeerDao extends BeerDaoMock implements IProductDao {
 
 
     public async getOne(name: string): Promise<IProduct | null> {
@@ -54,7 +54,7 @@ class UserDao extends BeerDaoMock implements IProductDao {
                     return;
                 }
             }
-            throw new Error('User not found');
+            throw new Error('Beer not found');
         } catch (err) {
             throw err;
         }
@@ -71,11 +71,11 @@ class UserDao extends BeerDaoMock implements IProductDao {
                     return;
                 }
             }
-            throw new Error('User not found');
+            throw new Error('Beer not found');
         } catch (err) {
             throw err;
         }
     }
 }
 
-export default UserDao;
+export default BeerDao;

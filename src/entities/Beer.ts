@@ -34,15 +34,11 @@ class Beer implements IProduct {
 
   public lastMod: string;
 
-  // disable- next time for consistency with Db names for easier usage
   constructor(
     id?: number,
-
     breweryId?: string,
     name?: string,
-
     catId?: number,
-
     styleId?: number,
     abv?: number,
     ibu?: number,
@@ -50,7 +46,6 @@ class Beer implements IProduct {
     upc?: number,
     filepath?: string,
     descript?: string,
-
     addUser?: number,
     lastMod?: string
   ) {
